@@ -10,7 +10,7 @@ from connection_handler import ConnectionMixin
 from text_services import TextServiceMixin, TEXT_SERVICES
 from matrix_services import MatrixServiceMixin, AckMixin, MATRIX_SERVICES
 
-CORRUPTION_PROBABILITY = 0.3  # peluang server mengirim jawaban salah
+CORRUPTION_PROBABILITY = 0.3  
 
 
 class Server(ConnectionMixin, TextServiceMixin, MatrixServiceMixin, AckMixin):
@@ -22,13 +22,12 @@ class Server(ConnectionMixin, TextServiceMixin, MatrixServiceMixin, AckMixin):
         self.service_enabled = {s: True for s in Service.ALL}
         self.lock = threading.Lock()
 
-        self.clients = []           # list of (conn, addr) yang sedang terhubung
+        self.clients = []           
         self.clients_lock = threading.Lock()
 
         self.shutdown_event = threading.Event()
         self._sock = None
 
-    # ----------------------------------------------------------------
     def log(self, msg):
         ts = time.strftime("%H:%M:%S")
         print(f"[{ts}] [SERVER] {msg}", flush=True)
@@ -37,9 +36,6 @@ class Server(ConnectionMixin, TextServiceMixin, MatrixServiceMixin, AckMixin):
         with self.lock:
             return [s for s, v in self.service_enabled.items() if v]
 
-    # ----------------------------------------------------------------
-    # Dispatcher: meneruskan ke layanan teks (Person 3) atau matriks (Person 4)
-    # ----------------------------------------------------------------
     def compute_correct(self, service, payload):
         if service in TEXT_SERVICES:
             return self.compute_text(service, payload)
@@ -55,7 +51,6 @@ class Server(ConnectionMixin, TextServiceMixin, MatrixServiceMixin, AckMixin):
             return self.corrupt_matrix(correct_result)
         return correct_result
 
-    # ----------------------------------------------------------------
     def stop(self):
         with self.clients_lock:
             for conn, addr in self.clients:
@@ -69,7 +64,6 @@ class Server(ConnectionMixin, TextServiceMixin, MatrixServiceMixin, AckMixin):
             except OSError:
                 pass
 
-    # ----------------------------------------------------------------
     def run(self):
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
