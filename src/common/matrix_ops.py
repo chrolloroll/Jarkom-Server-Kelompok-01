@@ -7,7 +7,7 @@ dan Client.
 def determinant_3x3(m):
     """Determinan matriks 3x3 dengan ekspansi kofaktor baris pertama."""
     a, b, c = m[0]
-    d, e, f = m[1]
+    d, e, f = m[1]s
     g, h, i = m[2]
     return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
 
