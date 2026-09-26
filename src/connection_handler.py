@@ -1,5 +1,4 @@
 import random
-
 from common.protocol import (
     MessageReader, Status, Event, MessageType,
     build_response, build_notify, send_message,
