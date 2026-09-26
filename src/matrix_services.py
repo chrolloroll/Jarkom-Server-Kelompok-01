@@ -4,23 +4,16 @@ import time
 from common.protocol import Service, Verdict, Event, build_notify
 from common.matrix_ops import determinant_3x3, inverse_3x3
 
-# Daftar layanan yang ditangani file ini 
 MATRIX_SERVICES = (Service.MATRIX_OPS,)
 
 
 class MatrixServiceMixin:
-    # ----------------------------------------------------------------
-    # Perhitungan jawaban BENAR untuk MATRIX_OPS
-    # ----------------------------------------------------------------
     def compute_matrix(self, payload):
         m = payload["matrix"]
         det = determinant_3x3(m)
         inv = inverse_3x3(m)
         return {"determinant": det, "inverse": inv, "invertible": inv is not None}
 
-    # ----------------------------------------------------------------
-    # Membuat jawaban SALAH untuk MATRIX_OPS
-    # ----------------------------------------------------------------
     def corrupt_matrix(self, correct_result):
         corrupted = dict(correct_result)
         corrupted["determinant"] = correct_result["determinant"] + random.choice([-5, -1, 1, 5, 10])
@@ -28,7 +21,6 @@ class MatrixServiceMixin:
 
 
 class AckMixin:
-    # ----------------------------------------------------------------
     def _handle_ack(self, msg):
         service = msg["service"]
         verdict = msg["verdict"]
@@ -62,5 +54,5 @@ class AckMixin:
                 "Semua layanan telah dinonaktifkan. Server menghentikan proses.",
             ))
             self.shutdown_event.set()
-            time.sleep(0.5)  # beri waktu agar pesan terkirim sebelum socket ditutup
+            time.sleep(0.5)  
             self.stop()
