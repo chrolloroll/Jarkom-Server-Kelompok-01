@@ -31,7 +31,6 @@ def inverse_3x3(m, tol=1e-9):
         [(b * f - c * e), -(a * f - c * d), (a * e - b * d)],
     ]
 
-    # adjoin = transpose dari matriks kofaktor
     adjoint = [[cofactor[col][row] for col in range(3)] for row in range(3)]
 
     inverse = [[round(adjoint[r][c] / det, 6) for c in range(3)] for r in range(3)]
