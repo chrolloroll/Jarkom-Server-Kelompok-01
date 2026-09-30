@@ -51,6 +51,6 @@ python3 src/server.py --host 127.0.0.1 --port 8080 --corrupt-prob 0.5
 
 ### Contributors:
 - [Aisyah Yasmina Huwaida (Inti server & integrasi)](https://github.com/chrolloroll)
-- [Naufal Dzakiryah (Penanganan koneksi)](https://github.com/Hexagontal)
+- [Naufal Dzakirsyah (Penanganan koneksi)](https://github.com/Hexagontal)
 - [Naila Syakira (Layanan teks)](https://github.com/fishpenyet)
 - [Andika Wahyu Dwi Saputra (Layanan matriks & penanganan ACK)](https://github.com/andumpss)
